@@ -1,0 +1,91 @@
+import java.util.Scanner;
+
+class Account {
+    long acc_no;
+    double amount;
+    String type;
+    String method;
+
+    public Account(long acc_no, double amount, String type, String method) {
+        this.acc_no = acc_no;
+        this.amount = amount;
+        this.type = type;
+        this.method = method;
+    }
+
+    public void display() {
+        double avail_amount = 1000.00;
+        if (type.equals("Savings")) {
+            if (method.equals("Withdraw")) {
+                amount = avail_amount - amount;
+                System.out.println("Current amount:" + amount);
+            } else {
+                amount = avail_amount + amount;
+                System.out.println("Current amount:" + amount);
+            }
+        } else {
+            if (method.equals("Withdraw")) {
+                amount = avail_amount + amount;
+                System.out.println("Current amount:" + amount);
+            } else {
+                amount = avail_amount - amount;
+                System.out.println("Current amount:" + amount);
+            }
+        }
+    }
+}
+
+class Loan extends Account {
+    public Loan(long acc_no, double amount, String method) {
+        super(acc_no, amount, "Loan", method);
+    }
+
+    public void display() {
+        super.display();
+    }
+}
+
+
+class Savings extends Account {
+    public Savings(long acc_no, double amount, String method) {
+        super(acc_no, amount, "Savings", method);
+    }
+
+    public void display() {
+        super.display();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter account number:");
+        long acc_no = s.nextLong();
+        System.out.println("Enter amount:");
+        double amount = s.nextDouble();
+        s.nextLine();
+        System.out.println("Types Available:");
+        System.out.println("  Savings");
+        System.out.println("  Loan");
+        System.out.println("Enter your type:");
+        String type = s.nextLine();
+        System.out.println("Method Available:");
+        System.out.println("  Deposit");
+        System.out.println("  Withdraw");
+        System.out.println("Enter your method:");
+        String method = s.nextLine();
+        switch (type) {
+            case "Savings":
+                Savings save = new Savings(acc_no, amount, method);
+                save.display();
+                break;
+            case "Loan":
+                Loan loan = new Loan(acc_no, amount, method);
+                loan.display();
+                break;
+            default:
+                System.out.println("Invalid type!");
+        }
+    }
+}
+
